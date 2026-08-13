@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // ========== Spring Boot 核心（Web）==========
+    // 處理 HTTP 請求、@RestController、@RequestMapping
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
+    // ========== 測試框架 ==========
+    // JUnit 5，跑 @Test 用的
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // ========== Lombok ==========
+    // @Data、@RequiredArgsConstructor 自動生成 getter/setter/建構子
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // ========== AOP 切面 ==========
+    // @Aspect、@Before、@Around 攔截器邏輯
+    implementation 'org.springframework.boot:spring-boot-starter-aspectj'
+
+    // ========== 開發工具 ==========
+    // 熱重載，改程式碼不用重啟伺服器
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // ========== 資料庫（JDBC）==========
+    // JdbcTemplate、DataSource，直接寫 SQL
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // ========== 資料庫（JPA）==========
+    // @Entity、@Repository、findAll()、save()，ORM 自動對應
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // ========== MySQL 驅動 ==========
+    // 讓 Java 可以連 MySQL 資料庫
+    implementation 'com.mysql:mysql-connector-j'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

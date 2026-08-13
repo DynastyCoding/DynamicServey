@@ -1,0 +1,14 @@
+/* 導航列背景：改成深海軍藍 */
+mat-toolbar, .navbar, nav {
+  background-color: #070d1a !important; /* 跟背景一樣的深藍色 */
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2) !important; /* 底部加上細細的霓虹青線 */
+  color: #e2e8f0 !important; /* 文字變亮 */
+}
+
+/* 導航列的按鈕或連結樣式 */
+a, button {
+  color: #e2e8f0 !important;
+}
+a:hover, button:hover {
+  color: #00f0ff !important; /* 滑鼠移過去變青色 */
+}

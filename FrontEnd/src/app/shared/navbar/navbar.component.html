@@ -1,0 +1,80 @@
+<!-- 使用 position: relative 作為定位基準 -->
+<mat-toolbar
+  class="shadow-md !bg-[#070d1a] !border-b !border-slate-800 !text-white px-6"
+  style="position: relative; height: 64px; display: flex; align-items: center"
+>
+  <!-- 左邊：Logo -->
+  <div
+    class="flex items-center gap-2 cursor-pointer"
+    routerLink="/"
+    style="z-index: 10"
+  >
+    <mat-icon class="text-cyan-400">assignment</mat-icon>
+    <span class="text-xl font-bold tracking-wider">動態問卷系統</span>
+  </div>
+
+  <!-- 右邊區塊：使用 position: absolute 強制定位在最右邊 -->
+  <div
+    style="
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    "
+  >
+    <button
+      mat-button
+      routerLink="/surveys"
+      class="!text-slate-300 hover:!text-cyan-400"
+    >
+      問卷查詢
+    </button>
+
+    @if (authService.currentUser()) {
+      <button
+        mat-button
+        routerLink="/admin"
+        class="!text-slate-300 hover:!text-cyan-400"
+      >
+        問卷管理
+      </button>
+      <button
+        mat-button
+        routerLink="/history"
+        class="!text-slate-300 hover:!text-cyan-400"
+      >
+        我的紀錄
+      </button>
+
+      <span class="text-slate-300"
+        >歡迎, {{ authService.currentUser()?.name }}</span
+      >
+
+      <button
+        mat-stroked-button
+        class="!border-cyan-400 !text-cyan-400 hover:!bg-cyan-400 hover:!text-black"
+        (click)="logout()"
+      >
+        登出
+      </button>
+    } @else {
+      <button
+        mat-button
+        routerLink="/login"
+        class="!text-slate-300 hover:!text-cyan-400"
+      >
+        登入
+      </button>
+      <button
+        mat-raised-button
+        class="!bg-cyan-400 !text-black hover:!bg-white hover:!text-black"
+        routerLink="/register"
+      >
+        註冊
+      </button>
+    }
+  </div>
+</mat-toolbar>

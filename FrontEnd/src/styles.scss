@@ -1,0 +1,467 @@
+// ============================================================
+// 菁英計畫 · 互動式終極主題 (PROJECT: Interactive)
+// ============================================================
+
+@use '@angular/material' as mat;
+
+// ---- 菁英計畫色盤 ----
+$gold: #f0e6a0;
+$gold-bright: #ffe88a;
+$cyan: #00e5ff;
+$cyan-bright: #66f0ff;
+$pink: #ff3d8a;
+$purple: #b388ff;
+$green: #00e676;
+
+// ============================================================
+// 1. 全域基底 — 動態背景 + 游標
+// ============================================================
+html, body {
+  height: 100%;
+  margin: 0;
+  cursor: none; // 隱藏預設游標
+}
+
+body {
+  background: #070b17 !important;
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(240, 230, 160, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(179, 136, 255, 0.02) 0%, transparent 30%);
+  background-attachment: fixed;
+  color: #c8d8e8;
+  font-family: 'Exo 2', 'Roboto', sans-serif;
+  position: relative;
+}
+
+// ---- 自訂游標（跟隨滑鼠） ----
+.custom-cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: $gold;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 0 20px $gold, 0 0 60px rgba(240, 230, 160, 0.2);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: $cyan;
+  box-shadow: 0 0 40px $cyan, 0 0 80px rgba(0, 229, 255, 0.2);
+}
+
+.custom-cursor.click {
+  width: 20px;
+  height: 20px;
+  background: $pink;
+  box-shadow: 0 0 60px $pink, 0 0 120px rgba(255, 61, 138, 0.3);
+}
+
+// ---- 掃描線動畫 ----
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 229, 255, 0.015) 3px,
+    rgba(0, 229, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+// ---- 水平掃描光條 ----
+.scan-bar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, $cyan, transparent);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 9997;
+  animation: scanMove 6s linear infinite;
+}
+
+@keyframes scanMove {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% { top: 100%; opacity: 0; }
+}
+
+// ============================================================
+// 2. 卡片 — 3D 翻轉 + 光追效果
+// ============================================================
+mat-card {
+  position: relative !important;
+  background: linear-gradient(145deg, rgba(12, 18, 37, 0.9), rgba(7, 11, 23, 0.95)) !important;
+  backdrop-filter: blur(16px) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 28px !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(240, 230, 160, 0.04) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: visible !important;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+// 3D 傾斜跟隨滑鼠（透過 JS 控制，下方提供腳本）
+mat-card:hover {
+  transform: translateY(-8px) scale(1.01) rotateX(2deg) rotateY(2deg);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.9),
+    0 0 100px rgba(0, 229, 255, 0.04),
+    inset 0 1px 0 rgba(240, 230, 160, 0.1) !important;
+}
+
+// 四角光點 — 放大且有脈衝
+mat-card::before {
+  content: '◆';
+  position: absolute;
+  top: -8px; left: -8px;
+  color: $gold;
+  font-size: 12px;
+  opacity: 0.2;
+  text-shadow: 0 0 20px $gold;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+mat-card::after {
+  content: '◆';
+  position: absolute;
+  bottom: -8px; right: -8px;
+  color: $cyan;
+  font-size: 12px;
+  opacity: 0.2;
+  text-shadow: 0 0 20px $cyan;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pulse-dot 2s ease-in-out infinite 0.5s;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.5); }
+}
+
+mat-card:hover::before {
+  opacity: 1;
+  transform: scale(2);
+  color: $gold-bright;
+  animation: none;
+}
+mat-card:hover::after {
+  opacity: 1;
+  transform: scale(2);
+  color: $cyan-bright;
+  animation: none;
+}
+
+// ---- 卡片內部光暈追蹤 ----
+mat-card .card-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 230, 160, 0.03), transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: none;
+  z-index: 0;
+}
+
+// ============================================================
+// 3. 表格 — 點擊 ripple + 列掃描
+// ============================================================
+.mat-mdc-table {
+  background: transparent !important;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+}
+
+th.mat-mdc-header-cell {
+  color: $gold !important;
+  border-bottom: none !important;
+  font-weight: 600 !important;
+  background: rgba(0, 229, 255, 0.04) !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  padding: 12px 16px !important;
+  border-radius: 4px 4px 0 0 !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+// 表頭 hover 光效
+th.mat-mdc-header-cell:hover {
+  background: rgba(0, 229, 255, 0.08) !important;
+  color: $gold-bright !important;
+}
+th.mat-mdc-header-cell::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, $gold, transparent);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+th.mat-mdc-header-cell:hover::after {
+  transform: scaleX(1);
+}
+
+td.mat-mdc-cell {
+  color: #b0c8dd !important;
+  border-bottom: none !important;
+  padding: 14px 16px !important;
+  background: rgba(255, 255, 255, 0.015) !important;
+  transition: all 0.3s !important;
+  position: relative;
+}
+
+// 列 hover — 整列發光 + 位移
+.mat-mdc-row {
+  border-radius: 4px !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+.mat-mdc-row:hover {
+  background: rgba(0, 229, 255, 0.04) !important;
+  transform: translateX(6px) scale(1.002);
+}
+.mat-mdc-row:hover td.mat-mdc-cell {
+  color: #ffffff !important;
+  border-left: 3px solid $cyan !important;
+  padding-left: 20px !important;
+}
+
+// 點擊 ripple
+.mat-mdc-row:active {
+  transform: scale(0.98);
+}
+
+// ============================================================
+// 4. 輸入框 — 聚焦震動 + 發光
+// ============================================================
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: rgba(255, 255, 255, 0.06) !important;
+  --mdc-outlined-text-field-focus-outline-color: transparent !important;
+  --mdc-outlined-text-field-input-text-color: #e0ecf8 !important;
+  --mdc-outlined-text-field-label-text-color: #6a7a90 !important;
+  --mdc-outlined-text-field-container-color: rgba(7, 11, 23, 0.6) !important;
+  width: 100% !important;
+  transition: all 0.3s;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__leading,
+.mat-mdc-form-field .mdc-notched-outline__trailing {
+  border-color: rgba(255, 255, 255, 0.04) !important;
+  transition: all 0.3s !important;
+}
+
+// 聚焦時底線發光 + 微震動
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: $gold !important;
+  box-shadow: 0 0 40px rgba(240, 230, 160, 0.08);
+}
+.mat-mdc-form-field.mat-focused {
+  animation: input-focus 0.4s ease;
+}
+@keyframes input-focus {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.mat-focused .mdc-floating-label {
+  color: $gold !important;
+}
+input, textarea {
+  color: #ffffff !important;
+  caret-color: $cyan !important;
+}
+
+// ============================================================
+// 5. 按鈕 — 多階段互動（hover + click + 載入）
+// ============================================================
+button.mat-mdc-raised-button {
+  position: relative !important;
+  background: transparent !important;
+  color: $gold !important;
+  border: 1px solid rgba(240, 230, 160, 0.15) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2.5px !important;
+  padding: 10px 32px !important;
+  border-radius: 4px !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
+  cursor: none !important;
+}
+
+// 背景光暈（hover 時展開）
+button.mat-mdc-raised-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(240, 230, 160, 0.05), rgba(0, 229, 255, 0.02));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+button.mat-mdc-raised-button:hover::before {
+  opacity: 1;
+}
+
+// 點擊波紋
+button.mat-mdc-raised-button .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(240, 230, 160, 0.3);
+  transform: scale(0);
+  animation: ripple-anim 0.6s linear;
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+button.mat-mdc-raised-button:hover {
+  background: linear-gradient(135deg, $gold, #d4c080) !important;
+  color: #070b17 !important;
+  border-color: transparent !important;
+  box-shadow:
+    0 0 60px rgba(240, 230, 160, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-3px) scale(1.03);
+}
+button.mat-mdc-raised-button:active {
+  transform: scale(0.95) !important;
+  box-shadow: 0 0 80px rgba(240, 230, 160, 0.3) !important;
+}
+
+// 載入狀態（加上 loading class）
+button.mat-mdc-raised-button.loading {
+  color: transparent !important;
+  pointer-events: none;
+}
+button.mat-mdc-raised-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 24px; height: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: $gold;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// ============================================================
+// 6. 晶片 — 點擊反饋 + 發光
+// ============================================================
+mat-chip {
+  border-radius: 2px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+  padding: 4px 14px !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+mat-chip:active {
+  transform: scale(0.9);
+}
+mat-chip.bg-gray-100 {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #7a8aa0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+mat-chip.bg-gray-100:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #aabbcc !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+mat-chip.bg-green-100 {
+  background: rgba(0, 230, 118, 0.06) !important;
+  color: $green !important;
+  border: 1px solid rgba(0, 230, 118, 0.1) !important;
+}
+mat-chip.bg-green-100:hover {
+  background: rgba(0, 230, 118, 0.15) !important;
+  box-shadow: 0 0 40px rgba(0, 230, 118, 0.1);
+  transform: translateY(-2px);
+}
+mat-chip.bg-blue-100 {
+  background: rgba(0, 229, 255, 0.04) !important;
+  color: $cyan !important;
+  border: 1px solid rgba(0, 229, 255, 0.08) !important;
+}
+mat-chip.bg-blue-100:hover {
+  background: rgba(0, 229, 255, 0.12) !important;
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+  transform: translateY(-2px);
+}
+mat-chip.bg-red-100 {
+  background: rgba(255, 61, 138, 0.04) !important;
+  color: $pink !important;
+  border: 1px solid rgba(255, 61, 138, 0.08) !important;
+}
+mat-chip.bg-red-100:hover {
+  background: rgba(255, 61, 138, 0.12) !important;
+  box-shadow: 0 0 40px rgba(255, 61, 138, 0.1);
+  transform: translateY(-2px);
+}
+mat-chip.bg-gold-100 {
+  background: rgba(240, 230, 160, 0.04) !important;
+  color: $gold !important;
+  border: 1px solid rgba(240, 230, 160, 0.08) !important;
+}
+mat-chip.bg-gold-100:hover {
+  background: rgba(240, 230, 160, 0.12) !important;
+  box-shadow: 0 0 40px rgba(240, 230, 160, 0.1);
+  transform: translateY(-2px);
+}
+
+// ============================================================
+// 7. 捲軸 — 自訂發光
+// ============================================================
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(7, 11, 23, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: $gold;
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(240, 230, 160, 0.2);
+  transition: all 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $cyan;
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+}

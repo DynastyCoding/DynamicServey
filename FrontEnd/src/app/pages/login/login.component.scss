@@ -1,0 +1,37 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* h-screen */
+  background: rgba(255, 255, 255, 0.02); /* bg-gray-100 equivalent */
+}
+
+.login-card {
+  width: 100%; /* w-full */
+  max-width: 28rem; /* max-w-md */
+  padding: 1.5rem; /* p-6 */
+}
+
+/* The mat-card will get its styling from the global styles.scss */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* gap-4 */
+}
+
+.login-links {
+  text-align: center;
+  margin-top: 1rem; /* mt-4 */
+}
+
+.login-links a {
+  /* The text-link class from Tailwind would just be blue underline */
+  /* We can style it to match our theme */
+  color: #34d399; /* Using our cyan/blue equivalent */
+  text-decoration: underline;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}

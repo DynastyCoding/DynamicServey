@@ -1,16 +1,16 @@
 <!-- 迴圈每一題 -->
 @for (q of stats()?.questionStats; track q.questionId) {
-  <mat-card class="mb-4">
+  <mat-card class="survey-stats-card">
     <mat-card-title>{{ $index + 1 }}. {{ q.questionTitle }}</mat-card-title>
 
-    <mat-card-content class="p-6">
+    <mat-card-content class="stats-content">
       <!-- ======================= -->
       <!-- 情況 1：選擇題 (單選/多選) 顯示圖表與表格 -->
       <!-- ======================= -->
       @if (q.type !== "TEXT") {
-        <div class="flex flex-col gap-8">
+        <div class="chart-container">
           <!-- 圓餅圖 (圖表) -->
-          <div class="w-full" style="max-width: 300px">
+          <div class="chart-wrapper">
             <canvas
               baseChart
               [data]="getChartData(q)"
@@ -20,14 +20,12 @@
           </div>
 
           <!-- 統計表格 -->
-          <table class="w-full text-sm">
+          <table class="stats-table">
             @for (opt of q.optionStats | keyvalue; track opt.key) {
-              <tr class="border-b">
-                <td class="p-2">{{ opt.value.optionText }}</td>
-                <td class="p-2 text-right">{{ opt.value.count }}</td>
-                <td class="p-2 text-right text-accent">
-                  {{ opt.value.percentage }}%
-                </td>
+              <tr class="stats-row">
+                <td class="stats-cell">{{ opt.value.optionText }}</td>
+                <td class="stats-cell stats-count">{{ opt.value.count }}</td>
+                <td class="stats-cell stats-percentage">{{ opt.value.percentage }}%</td>
               </tr>
             }
           </table>
@@ -38,9 +36,9 @@
       <!-- 情況 2：簡答題 (TEXT) 逐筆列出回答 -->
       <!-- ======================= -->
       @if (q.type === "TEXT") {
-        <div class="flex flex-col gap-3 mt-2">
+        <div class="text-answers-container">
           @for (ans of q.textAnswers; track $index) {
-            <div class="bg-white p-3 rounded shadow-sm border border-gray-200">
+            <div class="text-answer-item">
               {{ ans }}
             </div>
           }

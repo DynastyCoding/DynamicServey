@@ -1,10 +1,10 @@
-<div class="p-6 max-w-3xl mx-auto">
+<div class="survey-responses-container">
   <!-- 標題 -->
-  <h1 class="text-2xl font-bold text-gray-800 mb-6">我的填答紀錄</h1>
+  <h1 class="page-title">我的填答紀錄</h1>
 
   <!-- 表格卡片 -->
-  <div class="bg-white rounded-lg shadow overflow-hidden">
-    <table mat-table [dataSource]="responses()" class="w-full">
+  <div class="responses-card">
+    <table mat-table [dataSource]="responses()" class="responses-table">
       <!-- 編號欄位 -->
       <ng-container matColumnDef="index">
         <th mat-header-cell *matHeaderCellDef>編號</th>
@@ -27,11 +27,11 @@
 
       <!-- 操作欄位 -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="text-right">查看回覆</th>
-        <td mat-cell *matCellDef="let r" class="text-right">
+        <th mat-header-cell *matHeaderCellDef class="actions-header">查看回覆</th>
+        <td mat-cell *matCellDef="let r" class="actions-cell">
           <a
             [routerLink]="['/history', r.responseId]"
-            class="text-indigo-600 hover:underline"
+            class="history-link"
           >
             前往
           </a>
@@ -46,13 +46,13 @@
 
       <!-- 無資料時的提示列 -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell p-8 text-center" colspan="4">目前沒有填答紀錄。</td>
+        <td class="mat-cell empty-message" colspan="4">目前沒有填答紀錄。</td>
       </tr>
     </table>
   </div>
 
   <!-- 返回按鈕 -->
-  <div class="flex justify-center mt-6">
+  <div class="return-button-container">
     <button mat-stroked-button routerLink="/">返回首頁</button>
   </div>
 </div>

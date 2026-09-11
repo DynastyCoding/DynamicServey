@@ -1,0 +1,100 @@
+.survey-search-container {
+  max-width: 1400px; /* max-w-5xl */
+  margin: 0 auto; /* mx-auto; /* mx-auto */
+  padding: 1.5rem; /* p-6 */
+}
+
+.search-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+  color: #b0c8dd; /* text-gray-800 equivalent */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem; /* gap-4 */
+  margin-bottom: 1rem; /* mb-4 */
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem; /* p-4 */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  
+  /* Override the mat-form-field width */
+  .search-field {
+    flex: 1 1 200px; /* flex-1 min-w-[200px] */
+    min-width: 200px;
+  }
+  
+  /* Style for mat-form-field */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    margin-bottom: 1.25rem; /* mb-5 */
+  }
+}
+
+.results-container {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  overflow: hidden;
+}
+
+.results-table {
+  width: 100%; /* w-full */
+}
+
+/* Table styling overrides - these will work with the global mat-table styles */
+.title-cell {
+  font-weight: 500; /* font-medium */
+}
+
+.title-link {
+  color: #34d399; /* text-indigo-600 equivalent (using green from our theme) */
+  text-decoration: underline;
+  
+  &:hover {
+    text-decoration: underline; /* keep underline on hover */
+  }
+}
+
+.disabled-link {
+  color: #6b7280; /* text-gray-400 */
+}
+
+.period-cell {
+  font-size: 0.875rem; /* text-sm */
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+.empty-message {
+  padding: 2rem; /* p-8 */
+  text-align: center;
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+/* Status chip styling - using our theme colors */
+.status-chip {
+  /* Remove the !important overrides from Tailwind */
+  font-weight: 500;
+}
+
+.status-ongoing {
+  background: rgba(34, 197, 94, 0.1); /* bg-green-100 equivalent */
+  color: #34d399; /* text-green-700 */
+}
+
+.status-not-started {
+  background: rgba(59, 130, 246, 0.1); /* bg-blue-100 equivalent */
+  color: #60a5fa; /* text-blue-700 */
+}
+
+.status-ended {
+  background: rgba(239, 68, 68, 0.1); /* bg-red-100 equivalent */
+  color: #f87171; /* text-red-700 */
+}

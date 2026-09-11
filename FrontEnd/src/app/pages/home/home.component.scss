@@ -1,0 +1,54 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.survey-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.card-content {
+  flex-grow: 1;
+  padding-top: 1.5rem;
+}
+
+.card-description {
+  color: #b0c8dd; /* Matches the td color in global styles */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-actions {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empty-state {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.empty-state-text {
+  color: #b0c8dd;
+  font-size: 1.5rem;
+}

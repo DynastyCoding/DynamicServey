@@ -1,0 +1,188 @@
+.survey-fill-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.survey-header {
+  margin-bottom: 2rem;
+}
+
+.survey-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.survey-description {
+  color: #b0c8dd; /* text-gray-600 equivalent */
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem; /* p-4 */
+  border-radius: 0.5rem; /* rounded-lg */
+  border-left: 3px solid $cyan; /* border-l-4 border-cyan-500 equivalent */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow-sm */
+}
+
+.survey-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* gap-6 */
+}
+
+.info-card {
+  padding: 1.5rem; /* p-6 */
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-header {
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.card-title {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: bold;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem; /* gap-4 */
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.question-card {
+  padding: 1rem; /* p-4 */
+}
+
+.question-card .card-header {
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.question-card .card-title {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: bold;
+}
+
+.required-mark {
+  color: #f87171; /* text-red-500 */
+  margin-left: 0.25rem; /* ml-1 */
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* gap-3 */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* gap-4 */
+  padding-top: 1.5rem; /* py-6 */
+}
+
+/* Confirm page styles */
+.confirm-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* gap-6 */
+  /* animate-fade-in would be handled by Angular animations if needed */
+}
+
+.confirm-card {
+  padding: 1.5rem; /* p-6 */
+  border: 2px solid rgba(34, 197, 94, 0.2); /* border-2 border-green-200 */
+}
+
+.confirm-title {
+  color: #34d399; /* text-green-700 */
+}
+
+.info-preview {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem; /* p-4 */
+  border-radius: 0.5rem; /* rounded-lg */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* gap-2 */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.answers-preview {
+  /* No special styling needed for the container */
+}
+
+.answer-item {
+  padding-top: 1rem; /* py-4 */
+  padding-bottom: 1rem; /* py-4 */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.answer-item:first-child {
+  border-top: none;
+}
+
+.answer-question {
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.answer-text {
+  color: #34d399; /* text-indigo-700 (using green as indigo equivalent in our theme) */
+}
+
+.option-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem; /* px-2 py-1 */
+  border-radius: 9999px; /* rounded */
+  margin-right: 0.5rem; /* mr-2 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* Action buttons */
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* gap-4 */
+  padding-top: 2rem; /* pt-6 */
+  margin-top: 2rem; /* mt-8 */
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* border-t */
+}
+
+/* Loading state */
+.loading-container {
+  text-align: center;
+  padding: 3rem; /* py-20 */
+}
+
+.survey-spinner {
+  margin: 0 auto 1.5rem; /* mx-auto mb-4 */
+}
+
+.loading-text {
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+/* Button overrides to maintain our cyberpunk theme while keeping functionality */
+button.mat-button,
+button.mat-stroked-button,
+button.mat-raised-button {
+  /* These will inherit styles from the global styles.scss */
+  /* We can add specific overrides here if needed */
+  
+  /* Ensure proper sizing for our custom buttons */
+  &.px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

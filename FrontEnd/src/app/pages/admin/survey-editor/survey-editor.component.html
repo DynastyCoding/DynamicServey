@@ -4,15 +4,15 @@
   <!-- STEP 0：基本資料（標題、描述、日期、下一步） -->
   <!-- ========================================== -->
   @if (activeStep() === 0) {
-    <div class="flex flex-col gap-4">
+    <div class="step-0-container">
       <!-- 問卷名稱 -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>問卷名稱</mat-label>
         <input matInput formControlName="title" placeholder="請輸入問卷名稱" />
       </mat-form-field>
 
       <!-- 問卷描述 -->
-      <mat-form-field appearance="outline" class="w-full">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>問卷說明</mat-label>
         <textarea
           matInput
@@ -59,15 +59,15 @@
   <!-- STEP 1：題目設定（標題、題型、必填、選項） -->
   <!-- ========================================== -->
   @if (activeStep() === 1) {
-    <div class="flex flex-col gap-4">
+    <div class="step-1-container">
       <!-- 題目列表容器 -->
-      <div formArrayName="questions" class="flex flex-col gap-5">
+      <div formArrayName="questions" class="questions-list">
         <!-- 迴圈每一道題目 -->
         @for (q of questionsArray.controls; track q; let i = $index) {
-          <div [formGroupName]="i" class="p-4 border rounded-xl bg-gray-50">
+          <div [formGroupName]="i" class="question-card">
             <!-- 1. 標題與刪除按鈕 -->
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-xl font-bold">題目 #{{ i + 1 }}</span>
+            <div class="question-header">
+              <span class="question-number">題目 #{{ i + 1 }}</span>
               <button
                 mat-icon-button
                 color="warn"
@@ -79,13 +79,13 @@
             </div>
 
             <!-- 2. 題目名稱輸入框 -->
-            <mat-form-field appearance="outline" class="w-full mb-3">
+            <mat-form-field appearance="outline" class="full-width field-with-margin">
               <mat-label>題目名稱</mat-label>
               <input matInput formControlName="title" />
             </mat-form-field>
 
             <!-- 3. 題型切換 (單選/多選/文字) -->
-            <div class="mb-3">
+            <div class="type-selector">
               <mat-button-toggle-group
                 formControlName="type"
                 (change)="onTypeChange(i)"
@@ -99,21 +99,21 @@
             </div>
 
             <!-- 4. 必填勾選框 -->
-            <mat-checkbox formControlName="required" class="mb-3"
-              >必填</mat-checkbox
-            >
+            <mat-checkbox formControlName="required" class="margin-bottom">
+              必填
+            </mat-checkbox>
 
             <!-- 5. 選項區（如果是單選或多選才顯示） -->
             @if (q.get("type")?.value !== "TEXT") {
-              <div formArrayName="options" class="flex flex-col gap-2 mt-3">
+              <div formArrayName="options" class="options-list">
                 <!-- 迴圈每一個選項 -->
                 @for (
                   opt of getOptionsArray(i).controls;
                   track opt;
                   let j = $index
                 ) {
-                  <div [formGroupName]="j" class="flex gap-2 items-center">
-                    <mat-form-field appearance="outline" class="flex-grow">
+                  <div [formGroupName]="j" class="option-item">
+                    <mat-form-field appearance="outline" class="flexible-field">
                       <mat-label>選項 {{ j + 1 }}</mat-label>
                       <input matInput formControlName="optionText" />
                     </mat-form-field>
@@ -142,7 +142,7 @@
       </div>
 
       <!-- STEP 1 的導航按鈕（上一步、下一步） -->
-      <div class="flex gap-4 mt-4">
+      <div class="step-navigation">
         <button mat-stroked-button (click)="activeStep.set(0)">上一步</button>
         <button mat-raised-button color="primary" (click)="goToConfirm()">
           下一步：預覽確認
@@ -155,16 +155,16 @@
   <!-- STEP 2：預覽與確認（摘要、題目列表、儲存） -->
   <!-- ========================================== -->
   @else if (activeStep() === 2) {
-    <div class="flex flex-col gap-4">
+    <div class="step-2-container">
       <!-- 1. 基本資料摘要區塊 -->
-      <div class="bg-indigo-50 p-4 rounded-lg mb-6 border border-indigo-100">
-        <p class="mb-1">
+      <div class="summary-card">
+        <p class="summary-item">
           <strong>問卷名稱：</strong> {{ surveyForm.get("title")?.value }}
         </p>
-        <p class="mb-1">
+        <p class="summary-item">
           <strong>問卷說明：</strong> {{ surveyForm.get("description")?.value }}
         </p>
-        <p>
+        <p class="summary-item">
           <strong>開放期間：</strong>
           {{ surveyForm.get("startDate")?.value | date: "yyyy-MM-dd" }}
           ~ {{ surveyForm.get("endDate")?.value | date: "yyyy-MM-dd" }}
@@ -172,12 +172,12 @@
       </div>
 
       <!-- 2. 題目列表預覽區塊 -->
-      <div class="flex flex-col gap-4 mb-6">
+      <div class="questions-preview">
         @for (q of surveyForm.value.questions; track $index) {
-          <div class="p-3 border-b border-gray-200">
-            <p class="font-bold">
+          <div class="preview-item">
+            <p class="question-title">
               {{ $index + 1 }}. {{ q.title }}
-              <span class="text-gray-500 text-sm font-normal ml-2">
+              <span class="question-type">
                 ({{
                   q.type === "SINGLE"
                     ? "單選"
@@ -187,17 +187,16 @@
                 }})
               </span>
               @if (q.required) {
-                <span class="text-red-500 ml-1">*</span>
+                <span class="required-indicator">*</span>
               }
             </p>
             <!-- 顯示選項 -->
             @if (q.type !== "TEXT") {
-              <div class="flex flex-wrap gap-2 mt-2">
+              <div class="options-preview">
                 @for (opt of q.options; track $index) {
-                  <span
-                    class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                    >{{ opt.optionText }}</span
-                  >
+                  <span class="option-tag">
+                    {{ opt.optionText }}
+                  </span>
                 }
               </div>
             }
@@ -206,7 +205,7 @@
       </div>
 
       <!-- 3. STEP 2 的儲存按鈕區塊（正確放在 @for 迴圈外面！） -->
-      <div class="flex justify-center gap-4 pt-4 border-t">
+      <div class="action-buttons">
         <button mat-stroked-button (click)="activeStep.set(1)">返回修改</button>
         <button mat-stroked-button (click)="onFinalSubmit(false)">
           僅儲存 (草稿)

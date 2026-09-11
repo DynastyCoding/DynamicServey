@@ -1,0 +1,60 @@
+.survey-responses-container {
+  padding: 1.5rem; /* p-6 */
+  max-width: 960px; /* max-w-3xl */
+  margin: 0 auto; /* mx-auto */
+}
+
+.page-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+  color: #b0c8dd; /* text-gray-800 equivalent */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+/* The card will get styling from our theme */
+.responses-card {
+  /* The bg-white, rounded-lg, shadow, overflow-hidden will be handled by our theme */
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  overflow: hidden;
+}
+
+.responses-table {
+  width: 100%; /* w-full */
+}
+
+/* Table styling overrides */
+/* No special styling needed for most cells */
+
+.actions-header {
+  text-align: right;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+.history-link {
+  color: #34d399; /* text-indigo-600 equivalent */
+  text-decoration: underline;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.empty-message {
+  padding: 2rem; /* p-8 */
+  text-align: center;
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+/* Return button styling */
+.return-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem; /* mt-6 */
+}
+
+/* The button will get its styling from the global styles.scss */

@@ -1,12 +1,8 @@
-<div class="max-w-3xl mx-auto p-6">
+<div class="survey-fill-container">
   @if (survey()) {
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-indigo-900 mb-2">
-        {{ survey()?.title }}
-      </h1>
-      <p
-        class="text-gray-600 bg-white p-4 rounded-lg border-l-4 border-indigo-500 shadow-sm"
-      >
+    <div class="survey-header">
+      <h1 class="survey-title">{{ survey()?.title }}</h1>
+      <p class="survey-description">
         {{ survey()?.description || "感謝您撥冗填寫此問卷。" }}
       </p>
     </div>
@@ -16,15 +12,13 @@
       <form
         [formGroup]="fillForm"
         (ngSubmit)="onGoToConfirm()"
-        class="flex flex-col gap-6"
+        class="survey-form"
       >
-        <mat-card class="p-6 bg-indigo-50 border-indigo-100 border">
-          <mat-card-header class="mb-4">
-            <mat-card-title class="!text-xl text-indigo-800"
-              >基本資訊</mat-card-title
-            >
+        <mat-card class="info-card">
+          <mat-card-header class="card-header">
+            <mat-card-title class="card-title">基本資訊</mat-card-title>
           </mat-card-header>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="info-grid">
             <mat-form-field appearance="outline">
               <mat-label>姓名</mat-label>
               <input matInput formControlName="name" placeholder="請輸入姓名" />
@@ -54,12 +48,12 @@
         </mat-card>
         <!-- ... 接上一頁：基本資訊卡片 </mat-card> 已收尾 -->
         @for (q of survey()?.questions; track q.id) {
-          <mat-card class="p-4">
-            <mat-card-header class="mb-4">
-              <mat-card-title class="!text-lg">
+          <mat-card class="question-card">
+            <mat-card-header class="card-header">
+              <mat-card-title class="card-title">
                 {{ $index + 1 }}. {{ q.title }}
                 @if (q.required) {
-                  <span class="text-red-500 ml-1">*</span>
+                  <span class="required-mark">*</span>
                 }
               </mat-card-title>
             </mat-card-header>
@@ -67,7 +61,7 @@
               @if (q.type === "SINGLE") {
                 <mat-radio-group
                   [formControlName]="q.id!"
-                  class="flex flex-col gap-3"
+                  class="radio-group"
                 >
                   @for (opt of q.options; track opt.id) {
                     <mat-radio-button [value]="opt.id">{{
@@ -78,7 +72,7 @@
               }
               <!-- ... 接上一頁 (同一 @for / mat-card-content 內) -->
               @if (q.type === "MULTI") {
-                <div class="flex flex-col gap-3">
+                <div class="checkbox-group">
                   @for (opt of q.options; track opt.id) {
                     <mat-checkbox
                       (change)="
@@ -94,7 +88,7 @@
                 </div>
               }
               @if (q.type === "TEXT") {
-                <mat-form-field appearance="outline" class="w-full">
+                <mat-form-field appearance="outline" class="full-width">
                   <mat-label>您的回答</mat-label>
                   <textarea
                     matInput
@@ -106,14 +100,13 @@
               }
             </mat-card-content>
           </mat-card>
-          <div class="flex justify-center gap-4 py-6">
+          <div class="form-actions">
             <button mat-button type="button" routerLink="/home">取消</button>
             <button
               mat-raised-button
               color="primary"
               type="submit"
               [disabled]="fillForm.invalid"
-              class="px-8"
             >
               下一步 (預覽)
             </button>
@@ -121,34 +114,30 @@
         }
       </form>
     } @else {
-      <div class="flex flex-col gap-6 animate-fade-in">
-        <mat-card class="p-6 border-2 border-green-200">
-          <mat-card-header class="mb-4">
-            <mat-card-title class="text-green-700"
-              >請確認您的作答內容</mat-card-title
-            >
+      <div class="confirm-container">
+        <mat-card class="confirm-card">
+          <mat-card-header class="card-header">
+            <mat-card-title class="card-title confirm-title">請確認您的作答內容</mat-card-title>
           </mat-card-header>
 
-          <div class="bg-gray-50 p-4 rounded-lg flex flex-col gap-2 mb-6">
+          <div class="info-preview">
             <p><strong>姓名：</strong> {{ previewData().name }}</p>
             <p><strong>手機：</strong> {{ previewData().phone }}</p>
             <p><strong>Email：</strong> {{ previewData().email }}</p>
             <p><strong>年齡：</strong> {{ previewData().age || "未填寫" }}</p>
           </div>
-          <div class="divide-y divide-gray-200">
+          <div class="answers-preview">
             @for (ans of previewData().answers; track ans.questionId) {
-              <div class="py-4">
-                <p class="font-bold mb-2">
+              <div class="answer-item">
+                <p class="answer-question">
                   {{ $index + 1 }}. {{ (survey()?.questions)![$index].title }}
                 </p>
-                <p class="text-indigo-700">
+                <p class="answer-text">
                   @if (ans.answerText) {
                     {{ ans.answerText }}
                   } @else {
                     @for (oId of ans.optionIds; track oId) {
-                      <span
-                        class="inline-block bg-indigo-100 px-2 py-1 rounded mr-2 text-sm"
-                      >
+                      <span class="option-tag">
                         {{ getOptionText(ans.questionId, oId) }}
                       </span>
                     }
@@ -157,7 +146,7 @@
               </div>
             }
           </div>
-          <div class="flex justify-center gap-4 mt-8 pt-6 border-t">
+          <div class="confirm-actions">
             <button
               mat-stroked-button
               type="button"
@@ -169,7 +158,6 @@
               mat-raised-button
               color="accent"
               (click)="onFinalSubmit()"
-              class="px-8"
             >
               <mat-icon>send</mat-icon> 確認提交
             </button>
@@ -178,9 +166,9 @@
       </div>
     }
   } @else {
-    <div class="text-center py-20">
-      <mat-spinner class="mx-auto mb-4"></mat-spinner>
-      <p class="text-gray-500">正在讀取問卷內容...</p>
+    <div class="loading-container">
+      <mat-spinner class="survey-spinner"></mat-spinner>
+      <p class="loading-text">正在讀取問卷內容...</p>
     </div>
   }
 </div>

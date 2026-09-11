@@ -1,5 +1,5 @@
-<div class="flex justify-center items-center h-screen bg-gray-100">
-  <mat-card class="w-full max-w-md p-6">
+<div class="login-container">
+  <mat-card class="login-card">
     <mat-card-header>
       <mat-card-title>登入</mat-card-title>
     </mat-card-header>
@@ -9,7 +9,7 @@
       <form
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()"
-        class="flex flex-col gap-4"
+        class="login-form"
       >
         <!-- Email 輸入框 -->
         <mat-form-field appearance="outline">
@@ -40,8 +40,8 @@
         </button>
 
         <!-- 註冊連結 -->
-        <div class="text-center mt-4">
-          還沒有帳號？<a routerLink="/register" class="text-link">立即註冊</a>
+        <div class="login-links">
+          還沒有帳號？<a routerLink="/register">立即註冊</a>
         </div>
       </form>
     </mat-card-content>

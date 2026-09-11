@@ -1,0 +1,116 @@
+.survey-list-container {
+  padding: 1.5rem; /* p-6 */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.page-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+  color: #b0c8dd; /* text-gray-800 equivalent */
+}
+
+/* The button will inherit styles from global styles.scss */
+
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem; /* gap-4 */
+  margin-bottom: 1rem; /* mb-4 */
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem; /* p-4 */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  
+  /* Override the mat-form-field width */
+  .search-field {
+    flex: 1 1 200px; /* flex-1 min-w-[200px] */
+    min-width: 200px;
+  }
+  
+  /* Style for mat-form-field */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    margin-bottom: 1.25rem; /* mb-5 */
+  }
+}
+
+.survey-card {
+  /* The bg-white, rounded-lg, shadow, overflow-hidden will be handled by our theme */
+  /* We might need to add specific overrides if the global theme doesn't cover this */
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  overflow: hidden;
+}
+
+.survey-table {
+  width: 100%; /* w-full */
+}
+
+/* Table styling overrides */
+.title-cell {
+  font-weight: 500; /* font-medium */
+}
+
+.period-cell {
+  font-size: 0.875rem; /* text-sm */
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+.empty-message {
+  padding: 2rem; /* p-8 */
+  text-align: center;
+  color: #b0c8dd; /* text-gray-500 */
+}
+
+/* Actions header - for right alignment */
+.actions-header {
+  text-align: right;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+/* Status chip styling - using our theme colors */
+.status-chip {
+  /* Remove the !important overrides from Tailwind */
+  font-weight: 500;
+}
+
+.status-draft {
+  background: rgba(255, 255, 255, 0.04); /* bg-gray-100 equivalent */
+  color: #b0c8dd; /* text-gray-600 */
+}
+
+.status-ongoing {
+  background: rgba(34, 197, 94, 0.1); /* bg-green-100 equivalent */
+  color: #34d399; /* text-green-700 */
+}
+
+.status-not-started {
+  background: rgba(59, 130, 246, 0.1); /* bg-blue-100 equivalent */
+  color: #60a5fa; /* text-blue-700 */
+}
+
+.status-ended {
+  background: rgba(239, 68, 68, 0.1); /* bg-red-100 equivalent */
+  color: #f87171; /* text-red-700 */
+}
+
+/* Action buttons - these will inherit styles from global styles.scss */
+/* We can add specific overrides if needed */
+.mat-icon-button {
+  /* These will get the default mat-icon-button styles */
+  /* Add specific overrides here if needed */
+}

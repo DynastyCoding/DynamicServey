@@ -1,0 +1,17 @@
+.history-table {
+  width: 100%; /* w-full */
+}
+
+/* The table will get its styling from the global mat-table styles in styles.scss */
+
+.actions-header {
+  text-align: right;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+/* The button will get its styling from the global styles.scss */
+/* We can remove the color="primary" since it's not needed for our theme */
+/* If we want to keep a specific style, we can add it here */

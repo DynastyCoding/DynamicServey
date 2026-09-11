@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="history()" class="w-full">
+<table mat-table [dataSource]="history()" class="history-table">
   <ng-container matColumnDef="index">
     <th mat-header-cell *matHeaderCellDef>#</th>
     <td mat-cell *matCellDef="let h; let i = index">{{ i + 1 }}</td>
@@ -14,11 +14,10 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef class="text-right">操作</th>
-    <td mat-cell *matCellDef="let h" class="text-right">
+    <th mat-header-cell *matHeaderCellDef class="actions-header">操作</th>
+    <td mat-cell *matCellDef="let h" class="actions-cell">
       <button
         mat-icon-button
-        color="primary"
         [routerLink]="['/history', h.responseId]"
         title="查看作答內容"
       >

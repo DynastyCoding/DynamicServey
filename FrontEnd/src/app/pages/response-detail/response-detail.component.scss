@@ -1,0 +1,59 @@
+.response-detail-container {
+  max-width: 1200px; /* max-w-3xl */
+  margin: 0 auto; /* mx-auto */
+  padding: 1.5rem; /* p-6 */
+}
+
+.response-card {
+  padding: 1.5rem; /* p-6 */
+}
+
+.response-title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+  color: #34d399; /* text-indigo-900 equivalent (using green from our theme) */
+  margin-bottom: 0.25rem; /* mb-1 */
+}
+
+.response-time {
+  color: #b0c8dd; /* text-gray-500 */
+  font-size: 0.875rem; /* text-sm */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* gap-4 */
+}
+
+.detail-item {
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem; /* py-3 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* border-b border-gray-200 */
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-question {
+  font-weight: bold;
+  margin-bottom: 0.25rem; /* mb-1 */
+}
+
+.detail-answer {
+  color: #34d399; /* text-indigo-700 */
+}
+
+.action-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem; /* mt-8 */
+}
+
+.loading-message {
+  text-align: center;
+  color: #b0c8dd; /* text-gray-500 */
+  padding: 3rem; /* py-20 */
+}

@@ -35,22 +35,22 @@ export class AuthService {
     );
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.currentUser.set(null);
-    this.router.navigate(['/login']);
-  }
+logout() {
+     localStorage.removeItem('token');
+     this.currentUser.set(null);
+     this.router.navigate(['/login'], { replaceUrl: true });
+   }
 
-  private handleAuthSuccess(token: string) {
-    localStorage.setItem('token', token);
-    this.fetchUserProfile().subscribe({
-      next: () => this.router.navigate(['/']),
-      error: () => {
-        localStorage.removeItem('token');
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+private handleAuthSuccess(token: string) {
+     localStorage.setItem('token', token);
+     this.fetchUserProfile().subscribe({
+       next: () => this.router.navigate(['/home']),
+       error: () => {
+         localStorage.removeItem('token');
+         this.router.navigate(['/login']);
+       }
+     });
+   }
 
   fetchUserProfile() {
     // 加時間戳避免瀏覽器快取舊的 401 結果

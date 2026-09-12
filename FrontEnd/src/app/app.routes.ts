@@ -15,5 +15,5 @@ export const routes: Routes = [
       { path: 'stats/:id', loadComponent: () => import('./pages/admin/survey-stats/survey-stats.component').then(m => m.SurveyStatsComponent) },
       { path: 'responses/:id', loadComponent: () => import('./pages/admin/survey-responses/survey-responses.component').then(m => m.SurveyResponsesComponent) },
   ]},
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

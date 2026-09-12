@@ -30,6 +30,7 @@ a:hover, button:hover {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    transition: color 0.2s ease;
     
     mat-icon {
       font-size: 1.5rem;
@@ -39,6 +40,10 @@ a:hover, button:hover {
       font-size: 1.25rem;
       font-weight: bold;
       letter-spacing: 0.5px;
+    }
+    
+    &:hover {
+      color: #00f0ff;
     }
   }
   
